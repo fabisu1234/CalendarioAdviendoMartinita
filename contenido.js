@@ -15,7 +15,7 @@ const CONTENIDO = [
     tipo: "mensaje",
     ejemplo: false,
     titulo: "Diciembre solo empieza",
-    mensaje: "El primer evento de este calendario es agradecerte mi vida por estar en otro diciembre junto a mi, te amo demasiado, muchas gracias de verdad mi vida.\nAún nos faltan muchos diciembres para disfrutar juntos pero esto recién empieza."
+    mensaje: "El primer evento de este calendario es agradecerte mi vida por estar en otro diciembre junto a mi, te amo demasiado, muchas gracias de verdad mi vida.\nAún nos faltan muchos diciembres para disfrutar juntos pero esto recién empieza.🤎"
   },
 
   {
