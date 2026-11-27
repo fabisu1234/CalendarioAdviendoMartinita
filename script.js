@@ -276,15 +276,32 @@ const Calendario = (() => {
   let anterior = 0;
   let width = 0;
   let height = 0;
+  let densidad = 0;
   let particulas = [];
   const adornos = ["🎄", "⭐", "🍬", "🎁", "🔔", "🟡"];
   // Jengibre y bastón se dibujan en canvas para no depender del soporte de emojis.
+  function crearParticula(indice) {
+    return { x: Math.random() * width, y: Math.random() * height, size: 1 + Math.random() * 2, v: 7 + Math.random() * 15, fase: Math.random() * 6.28, alpha: .15 + Math.random() * .42, adorno: indice < (width < 600 ? 8 : 10) ? indice : -1 };
+  }
   function ajustarNieve() {
-    width = innerWidth; height = innerHeight;
-    const dpr = Math.min(devicePixelRatio || 1, 1.5);
-    canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
-    ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
-    particulas = Array.from({ length: width < 600 ? 32 : 60 }, (_, i) => ({ x: Math.random() * width, y: Math.random() * height, size: 1 + Math.random() * 2, v: 7 + Math.random() * 15, fase: Math.random() * 6.28, alpha: .15 + Math.random() * .42, adorno: i < (width < 600 ? 8 : 10) ? i : -1 }));
+    // El alto del lienzo es estable aunque se oculte la barra del navegador móvil.
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const nuevoAncho = Math.max(1, Math.round(rect.width));
+    const nuevoAlto = Math.max(1, Math.round(rect.height));
+    const nuevaDensidad = Math.min(devicePixelRatio || 1, 1.5);
+    if (nuevoAncho === width && nuevoAlto === height && nuevaDensidad === densidad) return;
+    const anchoAnterior = width;
+    width = nuevoAncho; height = nuevoAlto; densidad = nuevaDensidad;
+    canvas.width = Math.round(width * densidad); canvas.height = Math.round(height * densidad);
+    ctx?.setTransform(densidad, 0, 0, densidad, 0, 0);
+    // Conservar las figuras y su altura: un resize nunca reinicia su caída.
+    if (anchoAnterior && anchoAnterior !== width) {
+      for (const p of particulas) p.x *= width / anchoAnterior;
+    }
+    const cantidad = width < 600 ? 32 : 60;
+    if (particulas.length > cantidad) particulas.length = cantidad;
+    while (particulas.length < cantidad) particulas.push(crearParticula(particulas.length));
   }
   function jengibre(x, y, size) {
     ctx.save(); ctx.translate(x, y); ctx.scale(size / 20, size / 20);
@@ -319,6 +336,7 @@ const Calendario = (() => {
     document.documentElement.classList.toggle("tab-hidden", document.hidden);
     if (!ctx) return;
     if (document.hidden || reducirMovimiento.matches) { ctx.clearRect(0, 0, width, height); return; }
+    ajustarNieve();
     anterior = performance.now();
     nieveFrame = requestAnimationFrame(nevada);
   }
