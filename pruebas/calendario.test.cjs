@@ -67,7 +67,13 @@ test('hay 31 días con tipos admitidos y recursos locales existentes', () => {
     const item = contenido.find(x => x.dia === d);
     assert.ok(item && item.titulo);
     assert.equal(typeof item.ejemplo, "boolean");
-    if (item.imagen) assert.ok(fs.existsSync(path.join(raiz, item.imagen)));
+    if (item.imagen) {
+      let directorio = raiz;
+      for (const parte of item.imagen.split('/')) {
+        assert.ok(fs.readdirSync(directorio).includes(parte), `Día ${d}: revisar ruta y mayúsculas de ${item.imagen}`);
+        directorio = path.join(directorio, parte);
+      }
+    }
     if (item.imagen) assert.ok(item.alt);
   }
 });

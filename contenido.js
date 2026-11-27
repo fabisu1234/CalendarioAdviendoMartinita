@@ -42,7 +42,7 @@ const CONTENIDO = [
     tipo: "combinado",
     ejemplo: false,
     titulo: "Nuestra ultima aventura vivida",
-    imagen: "img/nosotros2.jpeg",
+    imagen: "img/Nosotros2.jpeg",
     alt: "Foto día concierto",
     pie: "Un recuerdo que siempre tendré",
     mensaje: "Si pudiera volver a ese día, lo elegiría igual. Sobre todo porque estabas tú."
