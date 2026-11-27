@@ -1,135 +1,139 @@
 /* TODO ES CONTENIDO DE EJEMPLO. Reemplaza estos 31 objetos con tus recuerdos.
- * Tipos: mensaje, foto, cupon, combinado. Mantén dia: 1 a 31, sin repetir.
+ * Tipos: mensaje, foto, cupon, combinado, enlace. Mantén dia: 1 a 31, sin repetir.
  * {nombre} y {firma} se reemplazan con los valores de config.js.
  * Cambia ejemplo a false cuando hayas personalizado ese día.
  * Las rutas son relativas: img/mi-foto.jpg (sin / al principio).
  * El texto se trata como texto, no como HTML; puedes usar \n para párrafos.
+ * En cualquier tipo puedes añadir un botón con estos campos opcionales:
+ * enlace: "https://open.spotify.com/...",
+ * textoEnlace: "Escucha esta canción ♡"
+ * Agrega una coma al campo anterior. Sin enlace, no se muestra ningún botón.
  */
 const CONTENIDO = [
   {
     dia: 1,
     tipo: "mensaje",
-    ejemplo: true,
-    titulo: "Diciembre empieza contigo",
-    mensaje: "{nombre}, hoy empieza un mes de pequeñas sorpresas. Las preparé pensando en tu sonrisa, esa que hace que cualquier día se sienta como casa."
+    ejemplo: false,
+    titulo: "Diciembre solo empieza",
+    mensaje: "El primer evento de este calendario es agradecerte mi vida por estar en otro diciembre junto a mi, te amo demasiado, muchas gracias de verdad mi vida.\nAún nos faltan muchos diciembres para disfrutar juntos pero esto recién empieza."
   },
 
   {
     dia: 2,
     tipo: "foto",
-    ejemplo: true,
-    titulo: "Mi lugar favorito",
-    imagen: "img/recuerdo-ejemplo.svg",
-    alt: "Ilustración de ejemplo: dos tazas junto a una ventana de invierno.",
-    pie: "Aquí irá nuestra foto de ese lugar al que siempre queremos volver."
+    ejemplo: false,
+    titulo: "Una de mis fotos favoritas",
+    imagen: "img/FotoFav.jpeg",
+    alt: "El dia anterior a halloween.",
+    pie: "Una de mis fotos favoritas de nosotros. Te amo.🤎"
   },
 
   {
     dia: 3,
     tipo: "cupon",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Una tarde de cine",
-    detalle: "Tú eliges la película. Yo me encargo de las cabritas, la mantita y los abrazos.",
-    condiciones: "Válido para una tarde juntos. Sin fecha de vencimiento."
+    detalle: "Tú eliges la película. Yo me encargo de las entradas.",
+    condiciones: "Válido para una entrada de cine. Sin fecha de vencimiento."
   },
 
   {
     dia: 4,
     tipo: "combinado",
-    ejemplo: true,
-    titulo: "Ese primer paseo",
-    imagen: "img/recuerdo-ejemplo.svg",
-    alt: "Ilustración de ejemplo para reemplazar por la foto de nuestro paseo.",
-    pie: "Un recuerdo que todavía me hace sonreír.",
+    ejemplo: false,
+    titulo: "Nuestra ultima aventura vivida",
+    imagen: "img/nosotros2.jpeg",
+    alt: "Foto día concierto",
+    pie: "Un recuerdo que siempre tendré",
     mensaje: "Si pudiera volver a ese día, lo elegiría igual. Sobre todo porque estabas tú."
   },
 
   {
-    dia: 5,
-    tipo: "mensaje",
-    ejemplo: true,
-    titulo: "Una cosa que me encanta",
-    mensaje: "Me encanta la forma en que te emocionas con las cosas pequeñas. Gracias por enseñarme a mirarlas un poquito mejor."
+  dia: 5,
+  tipo: "mensaje",
+  ejemplo: false,
+  titulo: "Una canción para ti",
+  mensaje: "Esta canción me recuerda a ti siempre que la escuchomi vida hermosa. 🤎",
+  enlace: "https://www.youtube.com/watch?v=_3GKsIFtEoE",
+  textoEnlace: "Escucha esta canción ♡"
   },
 
   {
-    dia: 6,
-    tipo: "cupon",
-    ejemplo: true,
-    titulo: "Desayuno con cariño",
-    detalle: "Un desayuno preparado por mí, con tus cosas favoritas y cero apuro.",
-    condiciones: "Canjeable un fin de semana que elijamos juntos."
+  dia: 6,
+  tipo: "enlace",
+  ejemplo: false,
+  titulo: "Por si estás aburrida",
+  mensaje: "No es necesario que la veas, pero si estás aburrida si",
+  enlace: "https://www.youtube.com/watch?v=G6ID6U4Xd7k",
+  textoEnlace: "Ver pelicula 👀"
   },
 
   {
     dia: 7,
     tipo: "foto",
-    ejemplo: true,
-    titulo: "Nuestra risa favorita",
-    imagen: "img/recuerdo-ejemplo.svg",
-    alt: "Imagen de ejemplo para una foto de los dos riéndonos.",
-    pie: "Reemplaza esta ilustración por esa foto que siempre nos hace reír."
+    ejemplo: false,
+    titulo: "Nuestras ultimas vacaciones juntos",
+    imagen: "img/Nosotros.jpeg",
+    alt: "Imágen de nuestras vacaciones",
+    pie: "Nuestras vacaiones en pichidangui. Que son un recuerdo muy bonito. Te amo🤎"
   },
 
   {
     dia: 8,
     tipo: "mensaje",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Por si hoy lo necesitas",
-    mensaje: "{nombre}, estoy orgulloso de ti. De lo que haces y también de cómo sigues adelante cuando cuesta. Hoy te mando un abrazo de esos que duran un ratito más."
+    mensaje: "{nombre}, estoy orgulloso de ti. De lo que haces y también de cómo sigues adelante cuando cuesta. Hoy solo es un recordatorio de que te amo y que estoy muy orgulloso de ti.🤎"
   },
 
   {
     dia: 9,
-    tipo: "combinado",
-    ejemplo: true,
-    titulo: "Un día cualquiera",
-    imagen: "img/recuerdo-ejemplo.svg",
-    alt: "Ilustración de ejemplo de un momento tranquilo para compartir.",
-    pie: "La magia de lo cotidiano.",
-    mensaje: "No necesitamos un plan enorme para pasarla bonito. A veces basta caminar contigo y conversar de cualquier cosa."
+    tipo: "mensaje",
+    ejemplo: false,
+    titulo: "Hoy el mensaje es mio casi para mi",
+    mensaje: "Hoy es mi último día de clases en la u de este semestre, me gustó tener este proceso junto a ti, auque aveces yo me comportara de manera irritable, Lo siento. Te amo mi vida hermosa.🤎(probalemente esté nervioso y estresado por la nota, peldon)"
   },
 
   {
     dia: 10,
     tipo: "cupon",
-    ejemplo: true,
-    titulo: "La cita la eliges tú",
-    detalle: "Elige el lugar, el antojo y el panorama. Yo reservo el día para nosotros.",
-    condiciones: "Un panorama acordado entre los dos, con mucho cariño."
+    ejemplo: false,
+    titulo: "Un pastelito riquito",
+    detalle: "Tú eliges el postre. Tu y yo de comerlo jeje.",
+    condiciones: "Válido para un postre en nuestra tienda favorita de pastelitos. Sin fecha de vencimiento."
   },
 
   {
     dia: 11,
     tipo: "mensaje",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Gracias por estar",
     mensaje: "Gracias por escucharme, por acompañarme y por hacerme un espacio en tus días. Tenerte cerca es uno de mis regalos favoritos."
   },
 
   {
     dia: 12,
-    tipo: "foto",
-    ejemplo: true,
-    titulo: "Un pequeño viaje",
-    imagen: "img/recuerdo-ejemplo.svg",
-    alt: "Ilustración de ejemplo para reemplazar por una fotografía de nuestro viaje.",
-    pie: "Aquí irá esa foto del viaje que queremos repetir."
+    tipo: "mensaje",
+    ejemplo: false,
+    titulo: "Una canción para ti",
+    mensaje: "Esta cancion me recuerda a cuando estabamos recien empezando y me estabas encantando. 🤎",
+    enlace: "https://open.spotify.com/intl-es/track/0pfpeTGQOWlGp6YUUbBD42?si=d7a2eaeca09a4537",
+    textoEnlace: "Escucha esta canción ♡"
   },
 
   {
     dia: 13,
     tipo: "cupon",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Masajito y descanso",
-    detalle: "Un masaje suave, tu música favorita y un ratito para bajar las revoluciones.",
+    detalle: "Un masaje suave, la música que te gusta y un ratito para bajar el estrés.",
     condiciones: "Cuando tú tengas ganas. La comodidad va primero."
   },
 
   {
     dia: 14,
     tipo: "combinado",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Nuestra canción",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Imagen de ejemplo para un recuerdo relacionado con nuestra canción.",
@@ -140,7 +144,7 @@ const CONTENIDO = [
   {
     dia: 15,
     tipo: "mensaje",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "La mitad del camino",
     mensaje: "Ya vamos a la mitad de este diciembre, {nombre}. Y todavía me quedan muchas formas de decirte lo feliz que me hace compartir la vida contigo."
   },
@@ -148,7 +152,7 @@ const CONTENIDO = [
   {
     dia: 16,
     tipo: "foto",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Ese abrazo",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Imagen de ejemplo para una fotografía de un abrazo.",
@@ -158,7 +162,7 @@ const CONTENIDO = [
   {
     dia: 17,
     tipo: "cupon",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Algo rico, juntos",
     detalle: "Cocinemos una receta nueva. Incluye prueba de sabor y permiso para dejar la cocina un poquito desordenada.",
     condiciones: "La receta se decide entre los dos."
@@ -167,7 +171,7 @@ const CONTENIDO = [
   {
     dia: 18,
     tipo: "mensaje",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Una promesa chiquitita",
     mensaje: "Prometo seguir buscando momentos para nosotros. Una caminata, una once rica, una conversación sin mirar el reloj."
   },
@@ -175,7 +179,7 @@ const CONTENIDO = [
   {
     dia: 19,
     tipo: "combinado",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Nuestra aventura pendiente",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Ilustración de ejemplo para el lugar de nuestra próxima aventura.",
@@ -186,7 +190,7 @@ const CONTENIDO = [
   {
     dia: 20,
     tipo: "foto",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Así de simple",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Ilustración de ejemplo para una foto espontánea de los dos.",
@@ -196,7 +200,7 @@ const CONTENIDO = [
   {
     dia: 21,
     tipo: "cupon",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Atardecer para dos",
     detalle: "Un paseo para ver caer el sol, algo rico para compartir y tiempo para conversar.",
     condiciones: "Elegimos un día bonito y un lugar que nos guste."
@@ -205,7 +209,7 @@ const CONTENIDO = [
   {
     dia: 22,
     tipo: "mensaje",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Mi parte favorita",
     mensaje: "Mi parte favorita de muchos días es contarte lo que me pasó y escuchar lo tuyo. Me gusta ser parte de tu mundo, {nombre}."
   },
@@ -213,7 +217,7 @@ const CONTENIDO = [
   {
     dia: 23,
     tipo: "combinado",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Casi es Navidad",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Ilustración de ejemplo para un recuerdo navideño juntos.",
@@ -224,7 +228,7 @@ const CONTENIDO = [
   {
     dia: 24,
     tipo: "combinado",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Mi deseo de Nochebuena",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Ilustración de ejemplo para nuestra foto especial de Nochebuena.",
@@ -235,7 +239,7 @@ const CONTENIDO = [
   {
     dia: 25,
     tipo: "cupon",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Un regalo para los dos",
     detalle: "Un día entero dedicado a nosotros: desayuno, paseo y una sorpresa que prepararé especialmente para ti.",
     condiciones: "Feliz Navidad, {nombre}. Pongámosle fecha juntos."
@@ -244,7 +248,7 @@ const CONTENIDO = [
   {
     dia: 26,
     tipo: "foto",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Lo que queda de la fiesta",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Ilustración de ejemplo para una foto de nuestra celebración.",
@@ -254,7 +258,7 @@ const CONTENIDO = [
   {
     dia: 27,
     tipo: "mensaje",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Sin ninguna ocasión",
     mensaje: "Hoy no hace falta una fecha especial. Solo quería recordarte que te quiero y que me encanta tenerte en mi vida."
   },
@@ -262,7 +266,7 @@ const CONTENIDO = [
   {
     dia: 28,
     tipo: "cupon",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Una once sin apuro",
     detalle: "Tu pancito favorito, algo calentito y una tarde para ponernos al día con calma.",
     condiciones: "Incluye repetición de abrazos, si tú quieres."
@@ -271,7 +275,7 @@ const CONTENIDO = [
   {
     dia: 29,
     tipo: "foto",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "El recuerdo que eliges tú",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Ilustración de ejemplo para el recuerdo favorito del año.",
@@ -281,7 +285,7 @@ const CONTENIDO = [
   {
     dia: 30,
     tipo: "combinado",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Todo lo que viene",
     imagen: "img/recuerdo-ejemplo.svg",
     alt: "Ilustración de ejemplo para una foto que represente nuestros próximos sueños.",
@@ -292,7 +296,7 @@ const CONTENIDO = [
   {
     dia: 31,
     tipo: "mensaje",
-    ejemplo: true,
+    ejemplo: false,
     titulo: "Contigo, un año más",
     mensaje: "{nombre}, gracias por cada recuerdo de este año. Por las risas, los abrazos y los días sencillos que hiciste especiales.\nSe terminan las puertitas, pero las ganas de sorprenderte siguen. Que el próximo año nos encuentre construyendo más momentos bonitos.\nTe quiero, hoy y en todo lo que viene."
   },

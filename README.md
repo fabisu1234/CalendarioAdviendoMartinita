@@ -20,7 +20,7 @@ El año queda fijo en **2026**, el año actual de esta entrega. Antes del 1 de d
 
 Todo está en `contenido.js`: un objeto por día, numerados del 1 al 31. Todos vienen marcados con `ejemplo: true`; al personalizarlos, pon `ejemplo: false` para quitar la etiqueta visible. Mantén los números sin repetir y guarda el archivo como UTF-8.
 
-Los cuatro formatos son:
+Formatos de ejemplo:
 
 ```js
 { dia: 1, tipo: "mensaje", ejemplo: false,
@@ -41,6 +41,26 @@ Los cuatro formatos son:
 ```
 
 Escribe texto normal, sin HTML. Usa `\n` para separar párrafos. Si necesitas comillas dentro del texto, escápalas: `\"te quiero\"`. Los días 24, 25 y 31 reciben automáticamente puertas más grandes y confeti, cualquiera sea su tipo.
+
+### Agrega un enlace a cualquier día
+
+Puedes usar `tipo: "enlace"` para un día dedicado a un link. También puedes añadir `enlace` y `textoEnlace` a los otros tipos. Por ejemplo:
+
+```js
+{
+  dia: 5,
+  tipo: "enlace",
+  ejemplo: false,
+  titulo: "Una canción para ti",
+  mensaje: "Esta canción me recuerda a ti, Martinita.",
+  enlace: "https://open.spotify.com/track/PEGA-AQUI-EL-ID",
+  textoEnlace: "Escucha esta canción ♡"
+},
+```
+
+Reemplaza la dirección de ejemplo por el enlace completo que quieras compartir, empezando con `https://` o `http://`. El botón abre una pestaña nueva. En un día de tipo `enlace`, `mensaje` es opcional. Si omites `textoEnlace`, dice «Abrir tu sorpresa ♡». Si no incluyes `enlace` o la dirección no es válida, no aparece el botón. Los links se muestran únicamente al abrir un día desbloqueado.
+
+Guarda los cambios y sube `contenido.js` a GitHub. La primera vez que incorpores esta función, sube también `script.js` y `style.css` actualizados.
 
 ## 3. Agrega tus fotos
 

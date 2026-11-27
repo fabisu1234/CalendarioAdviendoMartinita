@@ -638,6 +638,34 @@ dialog p,dialog figcaption {
   color:#926f47;
   margin-top:24px
 }
+/* Botón opcional para el enlace de un día. */
+.day-link {
+  margin:24px 0;
+}
+.surprise-link {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  max-width:100%;
+  min-height:48px;
+  padding:13px 22px;
+  border:1px solid #9a7848;
+  border-radius:5px;
+  background:#eee2c8;
+  color:var(--ink);
+  font-weight:600;
+  line-height:1.5;
+  text-decoration:none;
+  overflow-wrap:anywhere;
+}
+.surprise-link:hover {
+  background:#e4d5b8;
+}
+dialog .link-note {
+  margin:8px 0 0;
+  font-size:11px;
+  color:#6d745f;
+}
 .primary-button {
   background:var(--pine);
   color:var(--cream);

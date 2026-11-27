@@ -8,7 +8,7 @@ const raiz = path.resolve(__dirname, '..');
 const config = fs.readFileSync(path.join(raiz, 'config.js'), 'utf8');
 const codigo = fs.readFileSync(path.join(raiz, 'script.js'), 'utf8').split('// Inicio de la interfaz.')[0];
 function cargar(prueba = false, search = '') {
-  return vm.runInNewContext(config.replace('const MODO_PRUEBA = false;', `const MODO_PRUEBA = ${prueba};`) + codigo + '\n({Calendario, CONFIG, MODO_PRUEBA});', { Date, URLSearchParams, location: { search } });
+  return vm.runInNewContext(config.replace(/const MODO_PRUEBA = (?:true|false);/, `const MODO_PRUEBA = ${prueba};`) + codigo + '\n({Calendario, CONFIG, MODO_PRUEBA});', { Date, URL, URLSearchParams, location: { search } });
 }
 const { Calendario: c } = cargar();
 const fecha = (y, m, d) => new Date(y, m - 1, d, 12);
@@ -57,14 +57,16 @@ test('el progreso descarta datos corruptos, duplicados o fuera de rango', () => 
   for (const valor of [null, 'oops', '{}', 'null', '"texto"']) assert.equal(c.leerAbiertos(valor).size, 0);
   assert.deepEqual([...c.leerAbiertos('[1,1,2,31,32,0,-1,1.2,"3",null]')], [1, 2, 31]);
 });
-test('hay 31 ejemplos, todos los tipos y recursos locales existentes', () => {
+test('hay 31 días con tipos admitidos y recursos locales existentes', () => {
   const contenido = vm.runInNewContext(fs.readFileSync(path.join(raiz, 'contenido.js'), 'utf8') + '\nCONTENIDO;');
   assert.equal(contenido.length, 31);
   assert.equal(new Set(contenido.map(x => x.dia)).size, 31);
-  assert.deepEqual([...new Set(contenido.map(x => x.tipo))].sort(), ['combinado', 'cupon', 'foto', 'mensaje']);
+  const tiposAdmitidos = new Set(['mensaje', 'foto', 'cupon', 'combinado', 'enlace']);
+  for (const item of contenido) assert.ok(tiposAdmitidos.has(item.tipo));
   for (let d = 1; d <= 31; d++) {
     const item = contenido.find(x => x.dia === d);
-    assert.ok(item && item.ejemplo && item.titulo);
+    assert.ok(item && item.titulo);
+    assert.equal(typeof item.ejemplo, "boolean");
     if (item.imagen) assert.ok(fs.existsSync(path.join(raiz, item.imagen)));
     if (item.imagen) assert.ok(item.alt);
   }
@@ -72,4 +74,15 @@ test('hay 31 ejemplos, todos los tipos y recursos locales existentes', () => {
 test('los marcadores se reemplazan literalmente, incluso con signos especiales', () => {
   assert.equal(c.personalizar('Hola, {nombre}. Con amor, {firma}.'), 'Hola, Martinita. Con amor, Fabi.');
   assert.equal(c.personalizar(undefined), '');
+});
+
+// Los enlaces opcionales no deben permitir esquemas ejecutables ni rutas ambiguas.
+test('acepta enlaces web completos con parámetros y espacios exteriores', () => {
+  assert.equal(c.validarEnlace(' https://open.spotify.com/track/abc?si=123&x=2 '), 'https://open.spotify.com/track/abc?si=123&x=2');
+  assert.equal(c.validarEnlace('http://localhost:8000/'), 'http://localhost:8000/');
+});
+test('ignora enlaces ausentes, inválidos y esquemas que no son web', () => {
+  for (const url of [undefined, null, 42, {}, '', ' ', 'hola', 'img/foto.jpg', '//example.com', 'javascript:alert(1)', 'data:text/html,hola', 'file:///C:/foto.jpg', 'mailto:a@example.com', 'https://', 'https://usuario:clave@example.com']) {
+    assert.equal(c.validarEnlace(url), null);
+  }
 });

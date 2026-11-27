@@ -25,13 +25,22 @@ const Calendario = (() => {
   function personalizar(texto = "") {
     return String(texto).replace(/\{nombre\}/g, () => CONFIG.nombre).replace(/\{firma\}/g, () => CONFIG.firma);
   }
+  // Solo enlaces web completos; si falta o es inválido, no se muestra el botón.
+  function validarEnlace(valor) {
+    if (typeof valor !== "string" || !/^https?:\/\//i.test(valor.trim())) return null;
+    try {
+      const url = new URL(valor.trim());
+      if (!["https:", "http:"].includes(url.protocol) || url.username || url.password) return null;
+      return url.href;
+    } catch { return null; }
+  }
   function leerAbiertos(valor) {
     try {
       const datos = JSON.parse(valor);
       return new Set(Array.isArray(datos) ? datos.filter(d => Number.isInteger(d) && d >= 1 && d <= 31) : []);
     } catch { return new Set(); }
   }
-  return Object.freeze({ leerFechaSimulada, fechaActual, diaCivil, estado, personalizar, leerAbiertos });
+  return Object.freeze({ leerFechaSimulada, fechaActual, diaCivil, estado, personalizar, validarEnlace, leerAbiertos });
 })();
 
 // Inicio de la interfaz. Los contenidos permanecen en JS hasta abrir una puerta.
@@ -151,13 +160,32 @@ const Calendario = (() => {
     cuerpo.append(figure);
   }
 
+  // El enlace se crea junto a la sorpresa, nunca en una puerta bloqueada.
+  function agregarEnlace(contenido) {
+    const url = Calendario.validarEnlace(contenido.enlace);
+    if (!url) return;
+    const grupo = crear("div", "day-link");
+    const texto = typeof contenido.textoEnlace === "string" && contenido.textoEnlace.trim()
+      ? Calendario.personalizar(contenido.textoEnlace.trim())
+      : "Abrir tu sorpresa ♡";
+    const enlace = crear("a", "surprise-link", texto);
+    enlace.href = url;
+    enlace.target = "_blank";
+    enlace.rel = "noopener noreferrer";
+    const nota = crear("p", "link-note", "Se abre en una pestaña nueva");
+    nota.id = "enlace-nota";
+    enlace.setAttribute("aria-describedby", nota.id);
+    grupo.append(enlace, nota);
+    cuerpo.append(grupo);
+  }
+
   function mostrarSorpresa(dia) {
     const contenido = CONTENIDO.find(item => item.dia === dia);
     if (!contenido) {
       mostrarModal({ titulo: "Un poquito de paciencia", descripcion: "Estoy preparando algo bonito para este día. Vuelve a intentarlo pronto.", accion: "Volver al calendario" });
       return;
     }
-    const tipos = { mensaje: "Una cartita para ti", foto: "Un recuerdo nuestro", cupon: "Un plan para los dos", combinado: "Un pedacito de nosotros" };
+    const tipos = { mensaje: "Una cartita para ti", foto: "Un recuerdo nuestro", cupon: "Un plan para los dos", combinado: "Un pedacito de nosotros", enlace: "Un enlace especial para ti" };
     mostrarModal({ titulo: Calendario.personalizar(contenido.titulo), descripcion: tipos[contenido.tipo] || "Una sorpresa para ti", etiqueta: `${dia} de diciembre · ${especiales[dia] || "Con mucho cariño"}`, simbolo: especiales[dia] ? "star" : "heart" });
     if (contenido.ejemplo) cuerpo.append(crear("span", "example-label", "Contenido de ejemplo · para personalizar"));
     if (contenido.tipo === "foto" || contenido.tipo === "combinado") agregarFoto(contenido);
@@ -167,6 +195,7 @@ const Calendario = (() => {
       cuerpo.append(ticket);
     }
     if (contenido.mensaje) cuerpo.append(crear("p", "modal-message", Calendario.personalizar(contenido.mensaje)));
+    agregarEnlace(contenido);
     cuerpo.append(crear("p", "modal-signature", `Con amor, ${CONFIG.firma}`));
     const volver = crear("button", "primary-button", "Guardar este momento ♡");
     volver.type = "button";
@@ -185,7 +214,7 @@ const Calendario = (() => {
       boton.classList.remove("shake");
       void boton.offsetWidth;
       boton.classList.add("shake");
-      mostrarModal({ titulo: "Todavía no corazón", etiqueta: "Las cosas bonitas también se esperan", simbolo: "lock", descripcion: `Esta puertita se desbloquea el ${dia} de diciembre${Calendario.fechaActual().getFullYear() !== CONFIG.anio ? ` de ${CONFIG.anio}` : ""}.\n${estado.faltan === 1 ? "Se abre mañana. ¡Ya casi!" : `Faltan ${estado.faltan} días. Mientras tanto, te guardo un abrazo. 🎄`}`, accion: "La espero con cariño" });
+      mostrarModal({ titulo: "Todavía no corazón", etiqueta: "Las cosas bonitas también se esperan", simbolo: "lock", descripcion: `Esta puertita se desbloquea el ${dia} de diciembre${Calendario.fechaActual().getFullYear() !== CONFIG.anio ? ` de ${CONFIG.anio}` : ""}.\n${estado.faltan === 1 ? "Se abre mañana. ¡Ya casi!" : `Faltan ${estado.faltan} días. Mientras tanto, te guardo un besito. 🎄`}`, accion: "La espero con cariño" });
       return;
     }
     abriendo = true;
