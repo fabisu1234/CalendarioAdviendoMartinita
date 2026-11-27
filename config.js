@@ -1,5 +1,5 @@
 /* Personaliza aquí los datos del regalo. No necesitas tocar script.js. */
-const MODO_PRUEBA = false; // Activa temporalmente para usar ?fecha=2026-12-15.
+const MODO_PRUEBA = true; // Activa temporalmente para usar ?fecha=2026-12-15.
 const CONFIG = Object.freeze({
   nombre: "Martinita",
   firma: "Fabi",
